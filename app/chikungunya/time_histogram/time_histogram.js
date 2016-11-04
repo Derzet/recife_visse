@@ -44,10 +44,26 @@ function formatData(data, granularity) {
     granularity == 'Yearly' ? yearlyProcess : monthlyProcess
   );
 
-  var sortMonth = function(a,b){return (a.entry.ano + a.entry.mes) < (b.entry.ano + b.entry.mes)};
-  var sortYear = function(a,b){return a.entry - b.entry};
+  var sortMonth = function(a,b){
 
-  return result.sort(function(a,b){return a.entry < b.entry ? -1 : 1;});
+                                 if(parseInt(a.entry.split(' ')[0]) > parseInt(b.entry.split(' ')[0])) {
+                                   return 1;
+                                 }
+
+                                 if(parseInt(a.entry.split(' ')[0]) < parseInt(b.entry.split(' ')[0])) {
+                                   return -1;
+                                 }
+
+                                 if(parseInt(a.entry.split(' ')[1]) < parseInt(b.entry.split(' ')[1])){
+                                   return -1;
+                                 }
+
+                                 return 1;
+                               };
+
+  var sortYear = function(a,b){return a.entry > b.entry ? 1 : -1};
+
+  return result.sort(granularity == 'Yearly' ? sortYear : sortMonth);
 }
 
 
