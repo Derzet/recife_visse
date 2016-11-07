@@ -3,18 +3,33 @@
   <head>
     <script src="https://d3js.org/d3.v4.js"></script>
     <script src="time_histogram.js"></script>
+    <script src="moment/moment.js"></script>
     <script src="radio_button.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+      $( function() {
+        $( "#inital_date" ).datepicker();
+        $( "#final_date" ).datepicker();
+      } );
+    </script>
   </head>
 
   <style> .bar { fill: steelblue; } </style>
 
   <body>
-    <input type="radio" name="time_group" value="Monthly" checked="checked"  onclick="update('#time_histogram');"> Monthly<br>
-    <input type="radio" name="time_group" value="Yearly" onclick="update('#time_histogram');"> Yearly
-
+      <input type="radio" name="time_group" value="Monthly" checked="checked"  onclick="update('#time_histogram', '#inital_date', '#final_date');"> Monthly<br>
+      <input type="radio" name="time_group" value="Yearly" onclick="update('#time_histogram', '#inital_date', '#final_date');"> Yearly
+      <p>Initial Date: <input type="text" id="inital_date" onChange="update_filter_by_date('#time_histogram', '#inital_date', '#final_date');"></p>
+      <p>Final Date: <input type="text" id="final_date" onChange="update_filter_by_date('#time_histogram', '#inital_date', '#final_date');"></p>
+    <br><br><br><br>
     <div id="time_histogram"></div>
   </body>
 
   <script>
-      init('#time_histogram')
+  document.getElementById("inital_date").defaultValue = "07/01/2015";
+  document.getElementById("final_date").defaultValue = "01/01/2020";
+  init('#time_histogram', $( '#inital_date').val(), $( '#final_date').val());
   </script>
