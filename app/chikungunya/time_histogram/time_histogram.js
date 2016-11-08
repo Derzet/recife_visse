@@ -35,12 +35,10 @@ function formatData(data, granularity, inital_date, final_date) {
   while (start <= final_date) {
     if(granularity == 'Yearly') {
       entry_freq[start.year()] = 0;
-      start.add(1, 'years');
     } else {
       entry_freq[(start.month() + 1) + ' ' + start.year()] = 0;
-      start.add(1, 'months');
     }
-
+    start.add(1, 'day');
   }
 
   filtered_data.forEach(function(elem){
