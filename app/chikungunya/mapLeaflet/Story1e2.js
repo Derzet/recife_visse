@@ -1,23 +1,23 @@
 	  var result = [];
 
 d3.json("bairros.json", function(data1) {
-			
+	d3.json("casosChikungunya2015.json", function(data2) {		
         	data1.forEach(
 	 function(d){
 		 result[d['Nome Localidade']]=0;
+	 
 	 });
-   });
+		
 
-   d3.json("casosChikungunya2015.json", function(data2) {
+	  
     	
 	data2.forEach(
 			function(d){
 				result[d['no_bairro_residencia']] +=1;
-			});
+			}); 
 			
 			//console.log(result);
-  }); 
- var map = L.map('map').setView([-8.05596, -34.87986], 12);
+		 var map = L.map('map').setView([-8.05596, -34.87986], 12);
 
 L.tileLayer(
 'http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
@@ -154,6 +154,12 @@ var legend = L.control({position: 'bottomright'});
 	};
 
 	legend.addTo(map);
+  });
+
+   });
+
+ 
+
 
 	
 	
