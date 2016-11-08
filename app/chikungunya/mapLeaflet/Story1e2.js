@@ -1,4 +1,22 @@
- 
+	  var result = [];
+
+d3.json("bairros.json", function(data1) {
+			
+        	data1.forEach(
+	 function(d){
+		 result[d['Nome Localidade']]=0;
+	 });
+   });
+
+   d3.json("casosChikungunya2015.json", function(data2) {
+    	
+	data2.forEach(
+			function(d){
+				result[d['no_bairro_residencia']] +=1;
+			});
+			
+			//console.log(result);
+  }); 
  var map = L.map('map').setView([-8.05596, -34.87986], 12);
 
 L.tileLayer(
@@ -17,49 +35,35 @@ info.onAdd = function (map) {
     return this._div;
 };
 
-// method that we will use to update the control based on feature properties passed
+
 info.update = function (props) {
 	
     this._div.innerHTML = '<h4>Casos Chikungunya</h4>' +  (props ?
-        '<b>' + props.bairro_codigo + '</b><br />' + props.bairro_nome_ca 
+        '<b>' +  props.bairro_nome_ca + '</b><br />' +
+		" \n Quantidade Casos:"+result[props.bairro_nome_ca]
         : 'Passe por um bairro');
 };
 
 info.addTo(map);
 
 
+
+
 function getColor(d) {
 	
-    return d> 180 ? '#800026' :
-           d> 150  ? '#BD0026' :
-           d> 130  ? '#E31A1C' :
-           d> 100  ? '#FC4E2A' :
-           d> 50   ? '#FD8D3C' :
-           d> 20   ?'#FEB24C' :
-           d> 10   ?  '#FED976' :
-                      '#FFEDA0';
+    return d> 180 ? '#67000d' :
+           d> 150  ? '#a50f15' :
+           d> 130  ? '#cb181d' :
+           d> 100  ? '#ef3b2c' :
+           d> 50   ? '#fb6a4a' :
+           d> 20   ?'#fc9272' :
+           d> 10   ?  '#fcbba1' :
+                      '#fee0d2';
 
 }
 
 
-
-
-/*		
-	dataCountBairro = provData.reduce( function (prev, item) { 
-  if ( item in prev ) prev[item] ++; 
-  else prev[item] = 1; 
-  return prev; 
-}, {} );
-*/
-
- 		
-			
-//L.geoJson(stateData).addTo(map);
-
-
 function style(feature) {
-   // console.log(feature.properties.bairro_nome_ca);
-
 	
 	return {
 
@@ -154,4 +158,4 @@ var legend = L.control({position: 'bottomright'});
 	
 	
 	
-
+//credito leaflet tutorial
