@@ -3,11 +3,15 @@
   <head>
     <script src="https://d3js.org/d3.v4.js"></script>
     <script src="time_histogram.js"></script>
+    <script src="radio_button.js"></script>
   </head>
 
   <style> .bar { fill: steelblue; } </style>
 
   <body>
+    <input type="radio" name="time_group" value="Monthly" checked="checked"  onclick="update('#time_histogram');"> Monthly<br>
+    <input type="radio" name="time_group" value="Yearly" onclick="update('#time_histogram');"> Yearly
+
     <div id="time_histogram"></div>
   </body>
 
