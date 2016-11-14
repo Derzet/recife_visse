@@ -20,8 +20,8 @@
   <style> .bar { fill: steelblue; } </style>
 
   <body>
-      <input type="radio" name="time_group" value="Monthly" checked="checked"  onclick="update('#time_histogram', '#inital_date', '#final_date');"> Monthly<br>
-      <input type="radio" name="time_group" value="Yearly" onclick="update('#time_histogram', '#inital_date', '#final_date');"> Yearly
+      <input type="radio" name="time_group" value="Monthly"  onclick="update('#time_histogram', '#inital_date', '#final_date');"> Monthly<br>
+      <input type="radio" name="time_group" value="Yearly" checked="checked" onclick="update('#time_histogram', '#inital_date', '#final_date');"> Yearly
       <p>Initial Date: <input type="text" id="inital_date" onChange="update_filter_by_date('#time_histogram', '#inital_date', '#final_date');"></p>
       <p>Final Date: <input type="text" id="final_date" onChange="update_filter_by_date('#time_histogram', '#inital_date', '#final_date');"></p>
     <br><br><br><br>
@@ -30,6 +30,6 @@
 
   <script>
   document.getElementById("inital_date").defaultValue = "07/01/2015";
-  document.getElementById("final_date").defaultValue = "01/01/2020";
+  document.getElementById("final_date").defaultValue = "12/01/2020";
   init('#time_histogram', $( '#inital_date').val(), $( '#final_date').val());
   </script>

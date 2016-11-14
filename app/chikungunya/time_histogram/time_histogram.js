@@ -9,25 +9,10 @@ function createSvg(locator) {
             .attr("height", height + margin.top + margin.bottom)
           .append("g")
             .attr("transform",
-                  "translate(" + margin.left + "," + margin.top + ")")
+                  "translate(" + margin.left + "," + margin.top + ")");
 }
 
 function formatData(data, granularity, inital_date, final_date) {
-
-  var removeDuplicates = function(list){return Array.from(new Set(list))};
-
-  var flat_array = function(array) {
-                    return array.reduce(function(a, b) {
-                      return a.concat(b);
-                    })
-                  };
-
-  var filter_by_date = function(data, inital_date, final_date) {
-                    return data.filter(function(elem) {
-                      var elem_date = moment(elem.mes + '/' + elem.dia + '/' + elem.ano);
-                      return elem_date >= inital_date && elem_date <= final_date;
-                    });
-                  };
 
   var monthIntToStr = function(month) {
                       return {1:'Jan', 2:'Feb', 3:'Mar',
@@ -36,39 +21,56 @@ function formatData(data, granularity, inital_date, final_date) {
                               10:'Oct', 11:'Nov', 12:'Dec'}[month];
                     };
 
+  var filter_by_date = function(data, inital_date, final_date) {
+                    return data.filter(function(elem) {
+                      var elem_date = moment(elem.mes + '/' + elem.dia + '/' + elem.ano);
+                      return elem_date >= inital_date && elem_date <= final_date;
+                    });
+                  };
+
   var filtered_data = filter_by_date(data, inital_date, final_date);
-  var years = removeDuplicates(filtered_data.map(function(e){return e.ano;}));
+  var entry_freq = {};
+  var start = inital_date;
 
-  var months = [];
+  while (start <= final_date) {
+    if(granularity == 'Yearly') {
+      entry_freq[start.year()] = 0;
+    } else {
+      entry_freq[(start.month() + 1) + ' ' + start.year()] = 0;
+    }
+    start.add(1, 'day');
+  }
+
   filtered_data.forEach(function(elem){
-                          months.push({'ano': elem.ano, 'mes': elem.mes});
-                      });
+    if('Yearly' == granularity){
+      entry_freq[elem.ano] += 1;
+    } else {
+      entry_freq[elem.mes + ' ' + elem.ano] += 1;
+    }
+  });
 
-  var divisions = {'type': granularity == 'Yearly' ? 'ano' : 'mes',
-                   'set':  granularity == 'Yearly' ? years : months};
+  result = [];
 
-  var result = [];
+  for (var entry in entry_freq) {
+      if('Yearly' == granularity){
+        var label = entry;
+      } else {
+        splitted_entry = entry.split(' ');
+        var label = splitted_entry[1] + ' ' + monthIntToStr(splitted_entry[0]);
+      }
 
-  var yearlyProcess = function(value){result.push({
-                                        'entry': value,
-                                        'freq': (filtered_data.filter(function(e){return e[divisions.type] == value;})).length
-                                      })
-                                    };
+      result.push({'entry': label, 'freq': entry_freq[entry]});
+  }
 
-  var monthlyProcess = function(value){result.push({
-                                        'entry': value.ano + ' ' + monthIntToStr(value.mes),
-                                        'date': moment(value.mes + '/1/' + value.ano),
-                                        'freq': (filtered_data.filter(function(e){return e.mes == value.mes && e.ano == value.ano;})).length
-                                      })
-                                    };
+  var i = result.length;
+  while(i--)
+  {
+    if(result[i].freq > 0) break;
+    result.splice(i,1);
+  }
 
-  divisions.set.forEach(
-    granularity == 'Yearly' ? yearlyProcess : monthlyProcess
-  );
-
-  return result.sort(function(a,b){return a.date > b.date ? 1 : -1;});
+  return result;
 }
-
 function createHistogram(data, svg_locator) {
   var xScale = d3.scaleBand()
             .range([0, width])
