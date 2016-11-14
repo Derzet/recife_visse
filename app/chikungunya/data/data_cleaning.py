@@ -1,16 +1,25 @@
 import csv
 import json
-import datetime
+import configargparse
+import os
 
-with open('../data/casos-chikungunya2015.csv', 'r') as file:
-    reader = csv.DictReader(file.read().replace(';', ',').splitlines())
-    json_data = []
-    for case in reader:
-        date = datetime.datetime.strptime(case['dt_notificacao'], '%Y/%m/%d %H:%M:%S.%f')
-        json_data.append({'dia': date.day,
-                          'mes': date.month,
-                          'ano': date.year,
-                          'bairro': case['co_bairro_residencia']})
+p = configargparse.ArgParser(default_config_files=[os.path.join(os.path.dirname(__file__), "headers.yaml")])
+p.add('--input_file', action = "append")
+p.add('--output_file')
+p.add('--headers', action = "append")
 
-    with open('time_histogram_data.json', 'w', encoding='utf-8') as outfile:
+args = vars(p.parse_args())
+
+json_data = []
+
+for input_file in args['input_file']:
+    with open(input_file, 'r') as file:
+        reader = csv.DictReader(file.read().replace(';', ',').splitlines())
+        for case in reader:
+            entry = {}
+            for header in args['headers']:
+                entry[header] = case[header]
+            json_data.append(entry)
+
+with open(args['output_file'], 'w', encoding='utf-8') as outfile:
         json.dump(json_data, outfile, indent=4, sort_keys=True, separators=(',', ':'))

@@ -1,0 +1,3 @@
+input_file: [casos-chikungunya2015.csv,casos-chikungunya2016.csv]
+output_file: chik.json
+headers: [co_cid,dt_notificacao,ds_semana_notificacao]
