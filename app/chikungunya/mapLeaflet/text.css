@@ -24,3 +24,11 @@
     margin-right: 8px;
     opacity: 0.7;
 }
+
+.my-menu{
+  padding: 10px;
+}
+
+#collapse-menu{
+  margin-bottom: 0; 
+}

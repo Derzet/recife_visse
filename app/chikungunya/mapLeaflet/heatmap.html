@@ -17,7 +17,7 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
    		 <script src="js/bootstrap.min.js"></script>
 		<link rel="stylesheet" href="text.css">
-		  <script src="Story.js"></script>
+		  <script src="heatmap.js"></script>
 		  <link href="css/bootstrap-slider.css" rel="stylesheet">
 		<script type="text/javascript" src="bootstrap-slider.js"></script>
 		  
@@ -27,38 +27,35 @@
 
 	</head>
 	<body>
-			
-	<div id="map" class="map"> </div>
-	 
- 
+
+
 	<div class="dropdown">
-  	<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-    Sexo
+  		<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Classe
+    <span class="caret"></span></button>
+  <ul class="dropdown-menu"  role="menu" aria-labelledby="dropdownMenu2" >
+   	<li ><a  class="dropDownListItem2" data-name="Todos" data-extesion="Todos" href="#">Todos</a></li>
+  	 <li ><a  class="dropDownListItem2" data-name=1 data-extesion="Branca" href="#">branca</a></li>
+     <li ><a  class="dropDownListItem2" data-name=2 data-extesion="Preta" href="#">preta</a></li>
+     <li ><a class="dropDownListItem2" data-name=3 data-extesion="Amarela" href="#">amarela</a></li>
+      <li ><a  class="dropDownListItem2" data-name=4 data-extesion="Parda" href="#">parda</a></li>
+     <li ><a   class="dropDownListItem2" data-name=5 data-extesion="Indígena" href="#">indígena</a></li>
+     <li ><a  class="dropDownListItem2" data-name=9 data-extesion="Ignorado" href="#">ignorado</a></li>
+  </ul>
+
+
+  </div>
+
+<div class="dropdown">
+  	<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Sexo
     <span class="caret"></span>
   </button>
-  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" >
   	 <li><a class="dropDownListItem" data-name="Sexo" data-extesion="Sexo" href="#">Sexo</a></li>
      <li><a class="dropDownListItem" data-name="M" data-extesion="Masculino" href="#">Masculino</a></li>
      <li><a class="dropDownListItem" data-name="F" data-extesion="Feminino" href="#">Feminino</a></li>
   </ul>
-  <div>
+ </div>
 
-
-<div class="dropdown2">
-  		<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-    Classe
-    <span class="caret"></span>
-  </button>
-  <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-   <li><a class="dropDownListItem2" data-name="Todos" data-extesion="Todos" href="#">Todos</a></li>
-  	 <li><a class="dropDownListItem2" data-name=1 data-extesion="branca" href="#">branca</a></li>
-     <li><a class="dropDownListItem2" data-name=2 data-extesion="preta" href="#">preta</a></li>
-     <li><a class="dropDownListItem2" data-name=3 data-extesion="amarela" href="#">amarela</a></li>
-      <li><a class="dropDownListItem2" data-name=4 data-extesion="parda" href="#">parda</a></li>
-     <li><a class="dropDownListItem2" data-name=5 data-extesion="indígena" href="#">indígena</a></li>
-     <li><a class="dropDownListItem2" data-name=9 data-extesion="Ignorado" href="#">ignorado</a></li>
-  </ul>
-  <div>
 
 <div class="form-group">
   <label for="ida">Idade Mínima:</label>
@@ -68,9 +65,11 @@
   <label for="ida">Idade Maxima:</label>
   <input type="text" class="form-control" id="idadeMax" >
 </div>
+	
 
 <input class="btn btn-primary" id="idadeButton" type="button" value="Filtrar idade" >
-  
+
+	 <div id="map" class="map"> </div>
 
 		</body>
 		  <script>
@@ -80,12 +79,12 @@
 			var idadeMin = 0;
 			var estadoSexo="Sexo";
 			var estadoRaca="Todos";
-     
-		  
+
 			initMap('#map',estadoSexo,estadoRaca,idadeMin,idadeMax);
-		
+
 			$('.dropDownListItem').click(function(e) {
 				  var name = e.currentTarget;
+				
   	  			 $('#dropdownMenu1').text(name.getAttribute("data-extesion"));
     		estadoSexo = name.getAttribute("data-name");
     		//map.remove();
@@ -97,15 +96,13 @@
 			$('.dropDownListItem2').click(function(e) {
 				  var name = e.currentTarget;
   			 $('#dropdownMenu2').text(name.getAttribute("data-extesion"));
-  			 estadoCor = name.getAttribute("data-name");
+  			 estadoRaca = name.getAttribute("data-name");
+
+  			 console.log("farofa");
     		updateMapa('#map',estadoSexo,estadoRaca,idadeMin,idadeMax);
 			});
 			
-			
-			function functionIdade(){
-				console.log("teste");
-				console.log($('#idadeMin').val())
-			}
+		
 
 			$('#idadeButton').on('click', function(event) {
   				event.preventDefault(); // To prevent following the link (optional)
