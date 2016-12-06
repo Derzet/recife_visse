@@ -32,157 +32,132 @@
   <p class="bg-primary">Veja os casos em Recife das doenças transmistida pelo Aedis Egypti.</p>
 </div>
 
-<div class="col-sm-12" id="my_styles">
+<div class="col-sm-12" id="diseaseSelect">
 	  <p class="bg-primary">Selecione a doença:</p>
-     <button type="submit" class="btn btn-default" id="1" background-color:#4CAF50 >Dengue</button>
-     <button type="submit" class="btn btn-default" id="2">Zika</button>
-      <button type="submit" class="btn btn-default" id="3">Chikungunya</button>
+     <button type="submit" class="btn btn-default" id="selectDiseaseDengue" >Dengue</button>
+     <button type="submit" class="btn btn-default" id="selectDiseaseZika">Zika</button>
+      <button type="submit" class="btn btn-default" id="selectDiseaseChikungunya">Chikungunya</button>
 </div>
 
-
-
   <p class="bg-primary">Filtros:</p>
-<div class="dropdown">
-  	<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Sexo
-    <span class="caret"></span>
-  </button>
-  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" >
-  	 <li><a class="dropDownListItem" data-name="Sexo" data-extesion="Sexo" href="#">Sexo</a></li>
-     <li><a class="dropDownListItem" data-name="M" data-extesion="Masculino" href="#">Masculino</a></li>
-     <li><a class="dropDownListItem" data-name="F" data-extesion="Feminino" href="#">Feminino</a></li>
-  </ul>
- </div>
-
-
-	<div class="dropdown">
-  		<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Raça
-    <span class="caret"></span></button>
-  <ul class="dropdown-menu"  role="menu" aria-labelledby="dropdownMenu2" >
-   	<li ><a  class="dropDownListItem2" data-name="Todos" data-extesion="Todos" href="#">Todos</a></li>
-  	 <li ><a  class="dropDownListItem2" data-name=1 data-extesion="Branca" href="#">branca</a></li>
-     <li ><a  class="dropDownListItem2" data-name=2 data-extesion="Preta" href="#">preta</a></li>
-     <li ><a class="dropDownListItem2" data-name=3 data-extesion="Amarela" href="#">amarela</a></li>
-      <li ><a  class="dropDownListItem2" data-name=4 data-extesion="Parda" href="#">parda</a></li>
-     <li ><a   class="dropDownListItem2" data-name=5 data-extesion="Indígena" href="#">indígena</a></li>
-     <li ><a  class="dropDownListItem2" data-name=9 data-extesion="Ignorado" href="#">ignorado</a></li>
-  </ul>
-  </div>
-
-
-
-
-	<div class="dropdown">
-  		<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu4"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Gestação
-    <span class="caret"></span></button>
-  <ul class="dropdown-menu"  role="menu" aria-labelledby="dropdownMenu2" >
-   	<li ><a  class="dropDownListItem4" data-name="0" data-extesion="Todos" href="#">Ignorar</a></li>
-  	 <li ><a  class="dropDownListItem4" data-name="1" data-extesion="Gestante" href="#">Gestante</a></li>
-  </div>
-
-
+  
+  <select id="sexo_select">
+        <option selected="selected">Sexo</option>
+        <option>M</option>
+        <option>F</option>
+    </select>
+	
+	<select id="raca_select">
+        <option selected="selected">Raça</option>
+        <option>Branca</option>
+		<option>Preta</option>
+        <option>Amarela</option>
+		<option>Parda</option>
+        <option>Indígenea</option>
+		<option>Ignorado</option>
+    </select>
+	
+<select id="gestante_select">
+        <option selected="selected">Ignorar</option>
+        <option>Gestante</option>
+    </select>
+	
 
 <div class="form-group">
   <label for="ida">Idade Mínima:</label>
   <input type="text" class="form-control" id="idadeMin" >
 </div>
 <div class="form-group">
-  <label for="ida">Idade Maxima:</label>
+  <label for="ida">Idade Máxima:</label>
   <input type="text" class="form-control" id="idadeMax" >
 </div>
 	
-
 <input class="btn btn-primary" id="idadeButton" type="button" value="Filtrar idade" >
 
-  		  <p class="bg-primary">Auxiliar o histograma:</p>
-  </div>
-<div class="dropdown">
-  	<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Classe
-    <span class="caret"></span>
-  </button>
-  <ul class="dropdown-menu" aria-labelledby="dropdownMenu3" >
-  	 <li><a class="dropDownListItem3" data-name="Classe" data-extesion="Classe" href="#">Classe</a></li>
-     <li><a class="dropDownListItem3" data-name="Raça" data-extesion="Raça" href="#">Raça</a></li>
-     <li><a class="dropDownListItem3" data-name="Sexo" data-extesion="Sexo" href="#">Sexo</a></li>
-      <li><a class="dropDownListItem3" data-name="Escolariedade" data-extesion="Escolariedade" href="#">Escolariedade</a></li>
-        <li><a class="dropDownListItem3" data-name="Gestante" data-extesion="Gestante" href="#">Gestante</a></li>
-  </ul>
- </div>
-
+  		  <p class="bg-primary">Auxiliar o histograma:</p> 
+  <select id="histogram_select">
+        <option selected="selected">Sexo</option>
+        <option>Idade</option>
+        <option>Escolaridade</option>
+        <option>Gestante</option>
+        <option>Raça</option>
+    </select>
 
 
 <div id="map" class="map"></div>
 
+<input class="btn btn-primary" id="extendMapButton" type="button" value="Extender Mapa" >
+
 		</body>
 		  <script>
-     
 		    document.getElementById("idadeMin").defaultValue = 0;
-		  document.getElementById("idadeMax").defaultValue = 100;
+			document.getElementById("idadeMax").defaultValue = 100;
 		    var idadeMax = 100;
 			var idadeMin = 0;
-			var estadoSexo="Sexo";
-			var estadoRaca="Todos";
-			var gestante ="0"; //gestante
+			var optionSexo="Sexo";
+			var optionRaca="Cor";
+			var optionGestante ="Ignorar"; 
+			var filename = "zikaData.json";
+			
+			initMap('#map',filename,optionSexo,optionRaca,idadeMin,idadeMax,optionGestante);
 
-			initMap('#map',estadoSexo,estadoRaca,idadeMin,idadeMax,gestante);
-
-			$('.dropDownListItem').click(function(e) {
-				  var name = e.currentTarget;
+			$('#sexo_select').change(function() {
+			
+			optionSexo = $('#sexo_select option:selected').text();
+			var sexo_mapping = get_mapping_option('Sexo');
+			optionSexo = sexo_mapping[optionSexo];
+			
+			updateMapa('#map',filename,optionSexo,optionRaca,idadeMin,idadeMax,optionGestante);
+			});
+			
+			$('#raca_select').change(function() {
+			optionRaca = $('#raca_select option:selected').text();
+			var raca_mapping = get_mapping_option('Raca');
+			optionRaca = raca_mapping[optionRaca];
 				
-  	  			 $('#dropdownMenu1').text(name.getAttribute("data-extesion"));
-    		estadoSexo = name.getAttribute("data-name");
-    		//map.remove();
-
-    		updateMapa('#map',estadoSexo,estadoRaca,idadeMin,idadeMax,gestante);
-			});
-
-
-			$('.dropDownListItem2').click(function(e) {
-				  var name = e.currentTarget;
-  			 $('#dropdownMenu2').text(name.getAttribute("data-extesion"));
-  			 estadoRaca = name.getAttribute("data-name");
-
-  	
-    		updateMapa('#map',estadoSexo,estadoRaca,idadeMin,idadeMax,gestante);
+			updateMapa('#map',filename,optionSexo,optionRaca,idadeMin,idadeMax,optionGestante);
 			});
 			
-		
+			$('#gestante_select').change(function() {			
+			optionGestante = $('#gestante_select option:selected').text();
+			var gestante_mapping = get_mapping_option('Gestante');
+			optionGestante = gestante_mapping[optionGestante];
 			
-			$('.dropDownListItem4').click(function(e) {
-				  var name = e.currentTarget;
-  			 $('#dropdownMenu4').text(name.getAttribute("data-extesion"));
-  			 gestante = name.getAttribute("data-name");
-
-  	
-    		updateMapa('#map',estadoSexo,estadoRaca,idadeMin,idadeMax,gestante);
+	
+			updateMapa('#map',filename,optionSexo,optionRaca,idadeMin,idadeMax,optionGestante);
 			});
-			
-		
-			
-			
 
-
-
+			
 			$('#idadeButton').on('click', function(event) {
-  				event.preventDefault(); // To prevent following the link (optional)
+  				event.preventDefault(); 
   				idadeMin = $('#idadeMin').val();
   				idadeMax = $('#idadeMax').val();
-  				updateMapa('#map',estadoSexo,estadoRaca,idadeMin,idadeMax,gestante);
+  				updateMapa('#map',filename,optionSexo,optionRaca,idadeMin,idadeMax,optionGestante);
   		
 				});
-
-           /* //codigo do slider
-			var IdadeChange = function() {
-                 idadeMin = onChangeSlider.getValue()[0];
-			    idadeMax =onChangeSlider.getValue()[1];
-				updateMapa('#map',estadoSexo,estadoRaca,idadeMin,idadeMax);
 			
-			};
+          //massa de dados
+        $('#selectDiseaseDengue').click(function(e){
+      event.preventDefault(); // To prevent following the link (optional)
+       filename = "dengue_data_1.json";
+        updateMapa('#map',filename,optionSexo,optionRaca,idadeMin,idadeMax,optionGestante);
+    });
+     $('#selectDiseaseZika').click(function(e){
+      event.preventDefault();
+       filename = "zikaData.json";
+        updateMapa('#map',filename,optionSexo,optionRaca,idadeMin,idadeMax,optionGestante);
+    });
 
-
-			var onChangeSlider = new Slider("#sliderIdade", {
-			}).on('slide', IdadeChange);
-		    
-	        */
-				
+      $('#selectDiseaseChikungunya').click(function(e){
+      event.preventDefault();
+      filename = "chikungunya_data.json";
+        updateMapa('#map',filename,optionSexo,optionRaca,idadeMin,idadeMax,optionGestante);
+    });
+							
+					$('#extendMapButton').on('click', function(event) {	
+				var myDiv = document.getElementById("map"); //a div clonada
+				var divClone = myDiv.cloneNode(true); //div clonada
+				document.body.appendChild(divClone);  //adicionado ao corpo
+				});		
   			</script>
 </html>

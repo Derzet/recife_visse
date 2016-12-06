@@ -1,41 +1,26 @@
-
 var geojson;
 var map;
 var info;
 
-  //var slider = d3.slider().value([10, 25 ]);
-function initMap(locator,sexo,cor,idadeMin,idadeMax,gestante) {
- // var inital_date = moment(inital_date);
-//  var final_date = moment(final_date);
-
-d3.json("bairros.json", function(data1) { //data 1 é constante
-  d3.json("chikungunya_data.json", function(data2) {   //data 2 é alterado de acordo com a entrada  
-      var data2 =selectSexo(data2,sexo);   
-        data2 = selectCor(data2,cor);
-        data2 = selectIdade(data2,idadeMin,idadeMax);  
-        data2 =  selectGestante(data2,gestante);  
+function initMap(locator,filename,sexo,raca,idadeMin,idadeMax,gestante) {
+d3.json("bairros.json", function(data1) {
+  d3.json(filename, function(data2) {         
+        data2 = selectSexo(data2,sexo);
+       data2 = selectRaca(data2,raca);
+       data2 = selectIdade(data2,idadeMin,idadeMax);  
+       data2 =  selectGestante(data2,gestante);  		
         createMap(data1,data2,locator); 
-
   });
-
 });
-
-//deleteMap(locator);
-
 }
 
 
 function selectGestante(data,gestante){
 
-  if(gestante=="0"){return data;}
+  if(gestante=="Ignorar"){return data;}
 
  var filter_by_gestante =  data.filter(function(elem) {
-                     if(elem["tp_gestante"]=="1" || elem["tp_gestante"]=="2" || elem["tp_gestante"]=="3" ||  elem["tp_gestante"]=="4"  ){
-                               return true;
-                     }else{
-                               return false;
-                     }
-                      
+                    return ['1', '2', '3', '4'].indexOf(elem["tp_gestante"]) != -1;     
                     });
       return filter_by_gestante;
 } 
@@ -45,13 +30,11 @@ function selectIdade(data,idadeMin,idadeMax){
 
 
  var filter_by_idade =  data.filter(function(elem) {
-          var idade = elem["nu_idade"]%1000
-                     if(idadeMin<=idade  && idade<=idadeMax){   
-                               return true;
-                     }else{
-                               return false;
-                     }
+						var idade = elem["nu_idade"]%1000
+                        return idadeMin<=idade && idade<=idadeMax;
                     });
+
+
       return filter_by_idade;
 } 
 
@@ -60,30 +43,19 @@ function selectSexo(data,sexo){
   if(sexo=="Sexo"){return data;}
 
  var filter_by_sexo =  data.filter(function(elem) {
-                     if(elem["tp_sexo"]==sexo){
-                               return true;
-                     }else{
-                               return false;
-                     }
-                      
+						return elem["tp_sexo"]==sexo
                     });
       return filter_by_sexo;
 } 
 
 
-function selectCor(data,cor){
+function selectRaca(data,raca){
 
-  if(cor=="Todos"){return data;}
-
- var filter_by_cor=  data.filter(function(elem) {
-                     if(elem["tp_raca_cor"]==cor){
-                               return true;
-                     }else{
-                               return false;
-                     }
-                      
+  if(raca =="Cor"){return data;}
+ var filter_by_raca=  data.filter(function(elem) {
+                    	return elem["tp_raca_cor"]==raca
                     });
-      return filter_by_cor;
+      return filter_by_raca;
 } 
 
 //credito leaflet tutorial
@@ -100,7 +72,7 @@ function selectCor(data,cor){
                 result[d['no_bairro_residencia']] +=1;
             }); 
 
-  //console.log(result);
+ 
       map = L.map('map').setView([-8.05596, -34.87986], 12);
 L.tileLayer(
 'http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
@@ -116,7 +88,7 @@ info.onAdd = function (map) {
 };
 info.update = function (props) {
   
-    this._div.innerHTML = '<h4>Casos Chikungunya</h4>' +  (props ?
+    this._div.innerHTML = '<h4>Casos</h4>' +  (props ?
         '<b>' +  props.bairro_nome_ca + '</b><br />' +
     " \n Quantidade Casos:"+result[props.bairro_nome_ca]
         : 'Passe por um bairro');
@@ -210,13 +182,13 @@ var legend = L.control({position: 'bottomright'});
 }
 
 
-function updateMapa(svg_locator,sexo,cor,idadeMin,idadeMax,gestante){
+function updateMapa(svg_locator,filename,sexo,raca,idadeMin,idadeMax,gestante){
 
   d3.json("bairros.json", function(data1) { //data 1 é constante
-  d3.json("chikungunya_data.json", function(data2) {   //data 2 é alterado de acordo com a entrada  
+  d3.json(filename, function(data2) {   //data 2 é alterado de acordo com a entrada  
     var data2 =selectSexo(data2,sexo) ;  
          data2 = selectIdade(data2,idadeMin,idadeMax);
-       data2 = selectCor(data2,cor);    
+       data2 = selectRaca(data2,raca);    
         data2 =  selectGestante(data2,gestante);  
         updateMap(data1,data2,svg_locator); 
   });
@@ -251,7 +223,7 @@ info.onAdd = function (map) {
 };
 info.update = function (props) {
   
-    this._div.innerHTML = '<h4>Casos Chikungunya</h4>' +  (props ?
+    this._div.innerHTML = '<h4>Casos</h4>' +  (props ?
         '<b>' +  props.bairro_nome_ca + '</b><br />' +
     " \n Quantidade Casos:"+result[props.bairro_nome_ca]
         : 'Passe por um bairro');
@@ -323,6 +295,7 @@ function zoomToFeature(e) {
                 style: style,
                  onEachFeature: onEachFeature
             }).addTo(map);
+
   
 }
 
@@ -344,6 +317,35 @@ function selectData(data, inital_date, final_date) {
                   };
 
   return filter_by_date;
+}
 
 
+
+
+function gestante_mapping() {
+  return {
+    'Ignorar':'Ignorar','Gestante':'Gestante'
+  };
+}
+
+function raca_mapping() {
+  return {
+    'Branca':'1','Preta':'2',
+    'Amarela':'3','Parda':'4',
+    'Indígena':'5','Ignorada':'9',
+   'Cor':'Raça','Raça':'Cor'
+  };
+}
+
+function sexo_mapping() {
+  return {'M': 'M', 'F' : 'F','Sexo':'Sexo'};
+}
+
+function get_mapping_option(option) {
+  var class_mapping = {
+    'Sexo': sexo_mapping,
+    'Gestante': gestante_mapping,
+    'Raca': raca_mapping
+  };
+  return class_mapping[option]();
 }
